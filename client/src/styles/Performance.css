@@ -1,0 +1,414 @@
+@media (max-width: 768px) {
+  .dashboard,
+  .login-page {
+    contain: layout style paint;
+    will-change: scroll-position;
+  }
+
+  .MuiPaper-root,
+  .MuiCard-root,
+  .MuiButton-root,
+  .MuiIconButton-root {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .dashboard {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+  }
+
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  * {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@media (max-width: 768px) {
+  .MuiButton-root:focus-visible,
+  .MuiIconButton-root:focus-visible,
+  .MuiTextField-root:focus-within,
+  .MuiSelect-root:focus,
+  .MuiCheckbox-root:focus-visible,
+  .MuiSwitch-root:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .MuiTypography-root {
+    color: var(--text-primary);
+  }
+
+  .MuiButton-root,
+  .MuiIconButton-root,
+  .MuiCheckbox-root,
+  .MuiSwitch-root,
+  .MuiPickersDay-root {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .MuiListItem-root,
+  .MuiMenuItem-root {
+    padding: 12px 16px;
+    min-height: 48px;
+  }
+
+  .MuiTypography-h6 {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .MuiTypography-body1 {
+    line-height: 1.6;
+  }
+
+  .MuiTypography-body2 {
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .dashboard main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard header {
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+  }
+
+  .dashboard nav {
+    position: sticky;
+    top: 64px;
+    z-index: 1000;
+  }
+
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .task-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .task-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .task-card main {
+    flex: 1;
+  }
+
+  .task-card footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (-webkit-max-device-pixel-ratio: 1) {
+    .MuiPaper-root,
+    .MuiCard-root {
+      border: 1px solid var(--border-color);
+    }
+
+    .MuiButton-root,
+    .MuiIconButton-root {
+      border: 1px solid transparent;
+    }
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .MuiPaper-root,
+    .MuiCard-root {
+      border: 0.5px solid var(--border-color);
+    }
+
+    .MuiButton-root,
+    .MuiIconButton-root {
+      border: 0.5px solid transparent;
+    }
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .dashboard .MuiContainer-root {
+    padding: 8px;
+  }
+
+  .dashboard .MuiGrid-container {
+    gap: 12px;
+  }
+
+  .dashboard .MuiPaper-root {
+    padding: 16px;
+  }
+
+  .timer-container {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .dashboard .MuiContainer-root {
+    padding: 6px;
+  }
+
+  .dashboard .MuiGrid-container {
+    gap: 8px;
+  }
+
+  .dashboard .MuiPaper-root {
+    padding: 12px;
+  }
+
+  .timer-container {
+    bottom: 6px;
+    right: 6px;
+    left: 6px;
+  }
+
+  .MuiAppBar-root .MuiToolbar-root {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard .MuiContainer-root {
+    padding: 4px;
+  }
+
+  .dashboard .MuiGrid-container {
+    gap: 8px;
+  }
+
+  .dashboard .MuiPaper-root {
+    padding: 12px;
+  }
+
+  .MuiButton-root {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    min-height: 40px;
+  }
+
+  .MuiIconButton-root {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .MuiTypography-h6 {
+    font-size: 1rem;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .dashboard .MuiContainer-root {
+    padding: 8px;
+  }
+
+  .dashboard .MuiGrid-container {
+    gap: 12px;
+  }
+
+  .dashboard .MuiPaper-root {
+    padding: 16px;
+  }
+
+  .MuiButton-root {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
+
+  .MuiIconButton-root {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard .MuiContainer-root {
+    padding: 16px;
+  }
+
+  .dashboard .MuiGrid-container {
+    gap: 20px;
+  }
+
+  .dashboard .MuiPaper-root {
+    padding: 20px;
+  }
+
+  .MuiButton-root {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    min-height: 46px;
+  }
+
+  .MuiIconButton-root {
+    padding: 12px;
+    min-width: 46px;
+    min-height: 46px;
+  }
+}
+
+@supports (-webkit-appearance: none) {
+  @media (max-width: 768px) {
+    .MuiButton-root,
+    .MuiIconButton-root {
+      -webkit-appearance: none;
+      border-radius: 8px;
+    }
+
+    .MuiTextField-root .MuiInputBase-root {
+      -webkit-appearance: none;
+      border-radius: 8px;
+    }
+  }
+}
+
+@supports (-moz-appearance: none) {
+  @media (max-width: 768px) {
+    .MuiButton-root,
+    .MuiIconButton-root {
+      -moz-appearance: none;
+      border-radius: 8px;
+    }
+
+    .MuiTextField-root .MuiInputBase-root {
+      -moz-appearance: none;
+      border-radius: 8px;
+    }
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  @media (max-width: 768px) {
+    .MuiButton-root,
+    .MuiIconButton-root {
+      border-radius: 8px;
+    }
+
+    .MuiTextField-root .MuiInputBase-root {
+      border-radius: 8px;
+    }
+  }
+}
+
+@media print {
+  .dashboard {
+    background: white !important;
+    color: black !important;
+  }
+
+  .MuiPaper-root,
+  .MuiCard-root {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+
+  .MuiButton-root,
+  .MuiIconButton-root,
+  .timer-container {
+    display: none !important;
+  }
+
+  .MuiTypography-root {
+    color: black !important;
+  }
+
+  .task-card {
+    page-break-inside: avoid;
+    margin-bottom: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @media (max-width: 768px) {
+    .dashboard {
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+
+    .MuiPaper-root,
+    .MuiCard-root {
+      background-color: var(--bg-primary) !important;
+      border-color: var(--border-color) !important;
+    }
+
+    .MuiButton-root:hover {
+      background-color: #505050 !important;
+    }
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  @media (max-width: 768px) {
+    .dashboard {
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+
+    .MuiPaper-root,
+    .MuiCard-root {
+      background-color: var(--bg-primary) !important;
+      border-color: var(--border-color) !important;
+    }
+
+    .MuiButton-root {
+      background-color: #f8f9fa !important;
+      color: #212529 !important;
+    }
+
+    .MuiButton-root:hover {
+      background-color: #e9ecef !important;
+    }
+  }
+}
