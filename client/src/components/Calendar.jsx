@@ -87,7 +87,14 @@ const Calendar = ({ selectedDate, onDateSelect, tasks = [] }) => {
     return eachDayOfInterval({ start, end });
   }, [currentMonth, locale]);
 
-  const getTasksForDate = (date) => tasks.filter((task) => isSameDay(new Date(task.date), date));
+  const getTasksForDate = (date) => {
+    const pad = (n) => n.toString().padStart(2, '0');
+    const y = date.getFullYear();
+    const m = pad(date.getMonth() + 1);
+    const d = pad(date.getDate());
+    const dateString = `${y}-${m}-${d}`;
+    return tasks.filter((task) => task.date === dateString);
+  };
 
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));

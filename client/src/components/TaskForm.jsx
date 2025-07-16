@@ -123,6 +123,12 @@ const TaskForm = ({ open, onClose, task = null, selectedDate, onSave }) => {
 
   const handleSave = () => {
     if (formData.title.trim()) {
+      // Формируем дату в формате YYYY-MM-DD
+      const pad = (n) => n.toString().padStart(2, '0');
+      const y = selectedDate.getFullYear();
+      const m = pad(selectedDate.getMonth() + 1);
+      const d = pad(selectedDate.getDate());
+      const localDateString = `${y}-${m}-${d}`;
       const taskData = {
         id: task?.id || Date.now().toString(),
         title: formData.title.trim(),
@@ -137,13 +143,12 @@ const TaskForm = ({ open, onClose, task = null, selectedDate, onSave }) => {
           timerSessions: subtask.timerSessions || [],
         })),
         totalTimeSpent: task?.totalTimeSpent || 0,
-        date: selectedDate.toISOString().split("T")[0],
+        date: localDateString,
         isTransferred: false,
         transferredFrom: null,
         repeat: formData.repeat,
         timerSessions: task?.timerSessions || [],
       };
-
       onSave(taskData);
       onClose();
     }

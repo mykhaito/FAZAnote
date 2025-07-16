@@ -15,11 +15,12 @@ const Statistics = ({ tasks, selectedDate }) => {
   });
 
   useEffect(() => {
-    const tasksForDate = tasks.filter((task) => {
-      const taskDate = new Date(task.date);
-      const selected = new Date(selectedDate);
-      return taskDate.toDateString() === selected.toDateString();
-    });
+    const pad = (n) => n.toString().padStart(2, '0');
+    const y = selectedDate.getFullYear();
+    const m = pad(selectedDate.getMonth() + 1);
+    const d = pad(selectedDate.getDate());
+    const selectedDateString = `${y}-${m}-${d}`;
+    const tasksForDate = tasks.filter((task) => task.date === selectedDateString);
 
     let totalTasks = tasksForDate.length;
     let completedTasks = 0;
