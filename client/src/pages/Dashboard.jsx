@@ -156,6 +156,45 @@ function AppControls({ theme, toggleTheme, language, setLanguage, t, handleExpor
   );
 }
 
+const sanitizeText = (text) => {
+  const div = document.createElement("div");
+  div.textContent = text;
+  const safe = div.innerHTML;
+  return safe
+    .replace(/script/gi, "")
+    .replace(/on\w+=/gi, "")
+    .replace(/javascript:/gi, "");
+};
+
+const isSafeDepth = (obj, depth = 0, maxDepth = 10) => {
+  if (depth > maxDepth) return false;
+  if (typeof obj !== "object" || obj === null) return true;
+  return Object.values(obj).every((value) => isSafeDepth(value, depth + 1, maxDepth));
+};
+
+const isValidLength = (str, max = 500) => typeof str === "string" && str.length <= max;
+
+const countTextWeight = (tasks) => {
+  return tasks.reduce((sum, task) => {
+    const taskSize = (task.title || "").length + (task.description || "").length + (task.subtasks || []).reduce((s, sub) => s + (sub.title || "").length + (sub.comment || "").length, 0);
+    return sum + taskSize;
+  }, 0);
+};
+
+const sanitizeTasks = (tasks) =>
+  tasks
+    .filter((task) => typeof task === "object" && typeof task.title === "string" && typeof task.date === "string" && Array.isArray(task.subtasks))
+    .map((task) => ({
+      ...task,
+      title: isValidLength(task.title) ? sanitizeText(task.title) : "title too long",
+      description: isValidLength(task.description) ? sanitizeText(task.description || "") : "description too long",
+      subtasks: (task.subtasks || []).map((subtask) => ({
+        ...subtask,
+        title: isValidLength(subtask.title) ? sanitizeText(subtask.title || "") : "⚠️",
+        comment: isValidLength(subtask.comment) ? sanitizeText(subtask.comment || "") : "",
+      })),
+    }));
+
 const Dashboard = () => {
   const { theme, toggleTheme } = useTheme();
   const { translations: t, language, setLanguage } = useLanguage();
@@ -202,8 +241,16 @@ const Dashboard = () => {
   };
 
   const handleExportData = () => {
+    let tasksToExport = [...tasks];
+
+    tasksToExport.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    while (countTextWeight(tasksToExport) > 500000 && tasksToExport.length > 0) {
+      tasksToExport.shift();
+    }
+
     const exportData = {
-      tasks: tasks,
+      tasks: tasksToExport,
       exportDate: new Date().toISOString(),
       version: "1.0",
     };
@@ -230,18 +277,40 @@ const Dashboard = () => {
       try {
         const importedData = JSON.parse(e.target.result);
 
+        if (!isSafeDepth(importedData)) {
+          alert("Import stopped: too complicated structure.");
+          return;
+        }
+
         if (importedData.tasks && Array.isArray(importedData.tasks)) {
-          setTasks(importedData.tasks);
-          alert(t.importSuccess);
+          const textWeight = countTextWeight(importedData.tasks);
+          if (textWeight > 500000) {
+            let tasks = importedData.tasks;
+            tasks = tasks.sort((a, b) => new Date(a.date) - new Date(b.date));
+            while (countTextWeight(tasks) > 500000 && tasks.length > 0) {
+              tasks.shift();
+            }
+            if (tasks.length === 0) {
+              alert("Import failure: too much text data.");
+              return;
+            }
+            const cleanedTasks = sanitizeTasks(tasks);
+            setTasks(cleanedTasks);
+            alert("Import successful: latest tasks keeped.");
+            return;
+          }
+
+          const cleanedTasks = sanitizeTasks(importedData.tasks);
+          setTasks(cleanedTasks);
+          alert(t.importSuccess || "Import successful");
         } else {
-          alert(t.invalidFormat);
+          alert(t.invalidFormat || "Invalid format");
         }
       } catch {
-        alert(t.importError);
+        alert(t.importError || "Import failure");
       }
     };
     reader.readAsText(file);
-
     event.target.value = "";
   };
 
@@ -355,7 +424,7 @@ const Dashboard = () => {
   };
 
   const handleTransferTask = (task) => {
-    console.log("Transfer task:", task);
+    if (import.meta.env.DEV) console.log("Transfer task:", task);
   };
 
   const handleStartTimer = (taskId, subtaskId = null) => {

@@ -123,7 +123,6 @@ const TaskForm = ({ open, onClose, task = null, selectedDate, onSave }) => {
 
   const handleSave = () => {
     if (formData.title.trim()) {
-      // Формируем дату в формате YYYY-MM-DD
       const pad = (n) => n.toString().padStart(2, '0');
       const y = selectedDate.getFullYear();
       const m = pad(selectedDate.getMonth() + 1);
